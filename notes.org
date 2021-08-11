@@ -1,2 +1,4 @@
 * main location is index.js
 * the window object is BrowserWindow
+* common.js modules using require statement
+* show hide devtools under view in electron tab
