@@ -1,0 +1,2 @@
+* main location is index.js
+* the window object is BrowserWindow
