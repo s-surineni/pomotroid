@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <div id='app'>
     <app-titlebar />
-    <transition name="slide-left" mode="out-in">
-      <app-drawer v-if="drawerOpen" />
+    <transition name='slide-left' mode='out-in'>
+      <app-drawer v-if='drawerOpen' />
     </transition>
     <app-timer />
     <app-notification-win v-if="os === 'win32' && notifications" />
@@ -17,6 +17,8 @@ import appNotificationWin from '@/components/notification/Notification-win'
 import appTimer from '@/components/timer/Timer'
 import appTitlebar from '@/components/Titlebar'
 import themer from '@/utils/Themer'
+import { logger } from './../renderer/utils/logger'
+import { ipcRenderer } from 'electron'
 
 export default {
   name: 'pomotroid',
@@ -33,6 +35,16 @@ export default {
     // store getters
     drawerOpen() {
       return this.$store.getters.drawerOpen
+    },
+
+    mounted() {
+      // bus.$on('ping', () => {
+      //   // event logic
+      //   console.log('pong')
+      // })
+      ipcRenderer.on('pause', e => {
+        logger.info('Tray menu clicked: `pong`')
+      })
     },
 
     alwaysOnTop() {
@@ -59,7 +71,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 #app {
   animation: fade-in 0.5s ease forwards;
   position: relative;

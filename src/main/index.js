@@ -11,6 +11,7 @@ import {
   nativeImage
 } from 'electron'
 import { init as websocketInit } from './sockets'
+import { EventBus } from './../renderer/utils/EventBus'
 
 const electron = require('electron')
 const path = require('path')
@@ -172,11 +173,22 @@ function createTray() {
         app.isQuiting = true
         app.quit()
       }
+    },
+    {
+      label: 'Pause',
+      click: function() {
+        EventBus.$emit('timer-paused')
+      }
+    },
+    {
+      label: 'Play',
+      click: function() {
+        logger.info('fired start')
+        EventBus.$emit('timer-started')
+      }
     }
   ])
-  tray.on('click', () => {
-    toggleWindow()
-  })
+
   tray.setContextMenu(contextMenu)
 }
 
